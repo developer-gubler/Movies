@@ -1,0 +1,11 @@
+
+
+
+DDD                        kk        GGG         bb     ll
+DDDD                       kk kk    GG GG        bb     ll
+DD DD   eeee  rrrr   eeee  kkk     GG      uu uu bbbbb  ll  eeee  rrrr
+DD DD  eeeeee rr  r eeeeee kkk     GG GGGG uu uu bb  bb ll eeeeee rr  r
+DDDD   ee  ee rr    ee  ee kk kk    GG GG  uu uu bb  bb ll ee  ee rr
+DDD     eee   rr     eee   kk  kk    GGG    uuu  bbbbb  ll  eee   rr
+
+
