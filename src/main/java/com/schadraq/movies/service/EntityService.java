@@ -1,6 +1,7 @@
 package com.schadraq.movies.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -11,9 +12,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 
+import com.schadraq.movies.dto.Movie;
+
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Path;
 import jakarta.validation.Validator;
+import jakarta.validation.metadata.ConstraintDescriptor;
 
 public abstract class EntityService<T,R extends CrudRepository<T,Long>> {
 
@@ -24,12 +29,12 @@ public abstract class EntityService<T,R extends CrudRepository<T,Long>> {
 
     @Autowired
     private R dao;
-    
-	public abstract List<T> get(T o);
 
 	protected R getDao() {
 		return dao;
 	}
+    
+	public abstract List<T> get(T o);
 
 	protected List<T> get(T o, Function<T, Optional<T>> f) {
 
@@ -70,7 +75,7 @@ public abstract class EntityService<T,R extends CrudRepository<T,Long>> {
         return o.getClass().getSimpleName() + " does not exist!";
 	}
 
-	private void validate(T o) {
+	protected void validate(T o) {
 
 		Set<ConstraintViolation<T>> violations = validator.validate(o);
 
@@ -81,5 +86,81 @@ public abstract class EntityService<T,R extends CrudRepository<T,Long>> {
             }
             throw new ConstraintViolationException("Error occurred: " + sb.toString(), violations);
         }
+	}
+
+	protected <V> void validate(V value, Function<V, Boolean> f, String message) {
+		if (f.apply(value)) {
+			Set<ConstraintViolation<Movie>> violations = new HashSet<>();
+			violations.add(new ConstraintViolation<Movie>() {
+
+				@Override
+				public String getMessage() {
+					return message;
+				}
+
+				@Override
+				public String getMessageTemplate() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+
+				@Override
+				public Movie getRootBean() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+
+				@Override
+				public Class<Movie> getRootBeanClass() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+
+				@Override
+				public Object getLeafBean() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+
+				@Override
+				public Object[] getExecutableParameters() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+
+				@Override
+				public Object getExecutableReturnValue() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+
+				@Override
+				public Path getPropertyPath() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+
+				@Override
+				public Object getInvalidValue() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+
+				@Override
+				public ConstraintDescriptor<?> getConstraintDescriptor() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+
+				@Override
+				public <U> U unwrap(Class<U> type) {
+					// TODO Auto-generated method stub
+					return null;
+				}
+			});
+	        StringBuilder sb = new StringBuilder();
+            sb.append("The title must contain content");
+	        throw new ConstraintViolationException("Error occurred: " + sb.toString(), violations);
+		}
 	}
 }

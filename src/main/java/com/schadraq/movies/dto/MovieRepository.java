@@ -11,5 +11,7 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 
 	<T> Collection<T> findByTitle(String title, Class<T> type);
 
+	<T> Collection<T> findByReleaseYear(int releaseYear, Class<T> type);
+
 	Optional<Movie> findByTitleAndReleaseYear(String title, int releaseYear);
 }

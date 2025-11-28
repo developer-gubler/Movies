@@ -27,7 +27,7 @@ public class MovieController {
 
     @GetMapping("/getByTitle")
     ResponseEntity<List<Movie>> movie(@RequestParam @NotBlank(message = "The title must contain content") String title) {
-        return ResponseEntity.ok(service.get(title));
+        return ResponseEntity.ok(service.getByTitle(title));
     }
 
     @GetMapping("/getByTitleAndReleaseYear")

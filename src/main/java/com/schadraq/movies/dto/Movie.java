@@ -19,6 +19,8 @@ import lombok.Data;
 })
 public class Movie {
 
+	public static final int MIN_RELEASE_YEAR = 1888;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -27,7 +29,7 @@ public class Movie {
 	private String title;
 
 	@Column(name = "release_year")
-	@Min(value = 1888, message = "The release year must be at least 1888")
+	@Min(value = MIN_RELEASE_YEAR, message = "The release year must be at least 1888")
 	@Max(value = 2025, message = "The release year cannot be in the future")
 	private int releaseYear;
 
